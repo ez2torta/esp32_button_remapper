@@ -123,5 +123,4 @@ Given that we can't use all the pins from the GPIO, we must consider using All t
 - GPIO 14 (D14)
   
 **NOTES**
-- GPIO 1, 3 and 14 must have some kind of clearance at boot time, as they might output some stuff and we don't want to damage the board!
-- Missing pins :/ should we use pin 1, 3, 5, 14 or 15? we must study how not to affect inputs/outputs using the missing pins.. just 3 of them :(
+- GPIO 1, 3 and 14 must have some kind of clearance at boot time, as they might output some stuff and we don't want to damage the Jamma Board (using the output)
