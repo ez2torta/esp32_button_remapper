@@ -7,8 +7,9 @@ On Naomi Netboot setups button config is also needed, so the magic here is to wi
 # Button Config
 This is the default for Capcom 6-button fighters
 
-> [1] [2] [3]
-> [4] [5] [6]
+> [LP] [MP] [HP] =  [1] [2] [3]
+> 
+> [LK] [MK] [HK] = [4] [5] [6]
 
 The goal is to change the game from a 6 button fighter to a 4 or 5 button fighter without having to change any wiring.
 
@@ -124,3 +125,8 @@ Given that we can't use all the pins from the GPIO, we must consider using All t
   
 **NOTES**
 - GPIO 1, 3 and 14 must have some kind of clearance at boot time, as they might output some stuff and we don't want to damage the Jamma Board (using the output)
+
+# References
+[ESP32 Pinout Picture](https://cdn.shopify.com/s/files/1/0609/6011/2892/files/doc-esp32-pinout-reference-wroom-devkit.png?width=692)
+
+[Input Output Pins reference](https://www.upesy.com/blogs/tutorials/esp32-pinout-reference-gpio-pins-ultimate-guide)
