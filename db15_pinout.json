@@ -1,0 +1,77 @@
+[
+  {
+    "pin": 1,
+    "button": null,
+    "direction": null
+  },
+  {
+    "pin": 2,
+    "button": 6,
+    "direction": null
+  },
+  {
+    "pin": 3,
+    "button": "COIN",
+    "direction": null
+  },
+  {
+    "pin": 4,
+    "button": 4,
+    "direction": null
+  },
+  {
+    "pin": 5,
+    "button": 2,
+    "direction": null
+  },
+  {
+    "pin": 6,
+    "button": null,
+    "direction": "RIGHT"
+  },
+  {
+    "pin": 7,
+    "button": null,
+    "direction": "DOWN"
+  },
+  {
+    "pin": 8,
+    "button": null,
+    "direction": null
+  },
+  {
+    "pin": 9,
+    "button": null,
+    "direction": null
+  },
+  {
+    "pin": 10,
+    "button": 5,
+    "direction": null
+  },
+  {
+    "pin": 11,
+    "button": null,
+    "direction": "START"
+  },
+  {
+    "pin": 12,
+    "button": 3,
+    "direction": null
+  },
+  {
+    "pin": 13,
+    "button": 1,
+    "direction": null
+  },
+  {
+    "pin": 14,
+    "button": null,
+    "direction": "LEFT"
+  },
+  {
+    "pin": 7,
+    "button": null,
+    "direction": "UP"
+  }
+]
