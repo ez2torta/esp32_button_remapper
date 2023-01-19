@@ -38,7 +38,7 @@ For now i just have some dictionaries and arrays to start working :)
 - GPIO 21
 - GPIO 22
 - GPIO 23
-- GPIO 24
+- GPIO 25
 - GPIO 26
 - GPIO 27
 - GPIO 32
@@ -63,7 +63,7 @@ For now i just have some dictionaries and arrays to start working :)
 - GPIO 21
 - GPIO 22
 - GPIO 23
-- GPIO 24
+- GPIO 25
 - GPIO 26
 - GPIO 27
 - GPIO 32
@@ -89,32 +89,39 @@ Given that we can't use all the pins from the GPIO, we must consider using All t
 ### Lets start with Input pins first
 
 **1P Side (Inputs)**
-- GPIO 21
-- GPIO 22
-- GPIO 23
-- GPIO 24
-- GPIO 26
-- GPIO 27
+- GPIO 3 (RX0)
+- GPIO 22 (D22)
+- GPIO 23 (D23)
+- GPIO 25 (D25)
+- GPIO 26 (D26)
+- GPIO 27 (D27)
   
 **2P Side (Inputs)**
-- GPIO 32
-- GPIO 33
-- GPIO 34
-- GPIO 35
-- GPIO 36
-- GPIO 39
+- GPIO 32 (D32)
+- GPIO 33 (D33)
+- GPIO 34 (D34)
+- GPIO 35 (D35)
+- GPIO 36 (VP)
+- GPIO 39 (VN)
+
 ### Let's Continue with Possible Outputs
 **1P Side (Outputs)**
-- GPIO 2
-- GPIO 4
-- GPIO 5
-- GPIO 12
-- GPIO 13
-- GPIO 16
+- GPIO 2 (D2)
+- GPIO 4 (D4)
+- GPIO 5 (D5)
+- GPIO 12 (D12)
+- GPIO 13 (D13)
+- GPIO 16 (RX2)
  
 **2P Side (Outputs)**
 
-- GPIO 17
-- GPIO 18
-- GPIO 19
-- Missing pins :/ should we use 14 or 15? 6 to 11?
+- GPIO 17 (TX2)
+- GPIO 18 (D18)
+- GPIO 19 (D19)
+- GPIO 1 (TX0)
+- GPIO 21 (D21)
+- GPIO 14 (D14)
+  
+**NOTES**
+- GPIO 1, 3 and 14 must have some kind of clearance at boot time, as they might output some stuff and we don't want to damage the board!
+- Missing pins :/ should we use pin 1, 3, 5, 14 or 15? we must study how not to affect inputs/outputs using the missing pins.. just 3 of them :(
