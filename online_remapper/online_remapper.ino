@@ -9,10 +9,10 @@ const char *password = "Q6HXEcd4";
 
 WebServer server(80);
 // default capcom setup
-int playerOneOutputPinsSize = 6;
+int output_pins_size = 6;
 
 /*
-**1P Side (Inputs)**
+**Button Input Side**
 - BUTTON 1 = GPIO 32 (D32)
 - BUTTON 2 = GPIO 33 (D33)
 - BUTTON 3 = GPIO 34 (D34)
@@ -20,22 +20,28 @@ int playerOneOutputPinsSize = 6;
 - BUTTON 5 = GPIO 36 (D26)
 - BUTTON 6 = GPIO 39 (D27)
 */
-int playerOneInputPins[6] = {32, 33, 34, 35, 36, 39};
+int input_pins[6] = {32, 33, 34, 35, 36, 39};
 
+// Button Input Combo (Can be whatever)
+// D4 = ??? (Button Combo?)
+// D5 = ??? (Button Combo?)
+
+int button_combo_input_pins[2] = {4,5};
 /*
-**1P Side (Outputs)**
+**Button Output Side**
 - BUTTON 1 = GPIO 18 (D18)
 - BUTTON 2 = GPIO 19 (D19)
 - BUTTON 3 = GPIO 21 (D21)
 - BUTTON 4 = GPIO 22 (D22)
 - BUTTON 5 = GPIO 23 (D23)
 - BUTTON 6 = GPIO 25 (D25)
-- COIN = GPIO 26 (D26)
-- SERVICE = GPIO 13 (D13)
-- TEST = GPIO 14 (D14)
 */
-int playerOneOutputPins[6] = {18, 19, 21, 22, 23, 25};
-int serviceOutputPins[3] = {26, 13, 14};
+int output_pins[6] = {18, 19, 21, 22, 23, 25};
+// SERVICE Output Pins
+// - COIN = GPIO 26 (D26)
+// - SERVICE = GPIO 13 (D13)
+// - TEST = GPIO 14 (D14)
+int service_output_pins[3] = {26, 13, 14};
 
 void setup()
 {
@@ -66,17 +72,23 @@ void setup()
   server.begin();
   Serial.println("Server started");
 
-  // Configure the 1P input pins
-  for (int i = 0; i < playerOneOutputPinsSize; i++)
+  // Configure the input pins
+  for (int i = 0; i < output_pins_size; i++)
   {
-    pinMode(playerOneInputPins[i], INPUT);
+    pinMode(input_pins[i], INPUT);
   }
 
-  // Configure the 1P output pins
-  for (int i = 0; i < playerOneOutputPinsSize; i++)
+  // Configure the output pins
+  for (int i = 0; i < output_pins_size; i++)
   {
-    pinMode(playerOneOutputPins[i], OUTPUT);
+    pinMode(output_pins[i], OUTPUT);
   }
+  // Service Output Pins
+  for (int i = 0; i < 3; i++)
+  {
+    pinMode(service_output_pins[i], OUTPUT);
+  }
+  
 }
 
 // Web Server!
@@ -91,35 +103,56 @@ void handleRoot()
   {
     Serial.print(F("deserializeJson() failed: "));
     Serial.println(error.c_str());
+    server.send(500, "text/html", "Internal Server Error :(");
     return;
   }
-  // print 1P old pins
-  Serial.println("Old Output Pins For 1P:");
-
-  for (int i = 0; i < playerOneOutputPinsSize; i++)
-  {
-    Serial.print(playerOneOutputPins[i]);
-    Serial.print(", ");
-  }
-  Serial.println("----------------");
-
+  
   // Update Arrays
-  if (doc["playerOneOutputPins"])
+  if (doc["output_pins"])
   {
-    for (int i = 0; i < doc["playerOneOutputPins"].size(); i++)
-    {
-      playerOneOutputPins[i] = doc["playerOneOutputPins"][i].as<int>();
-    }
-  }
-  // print 1P New pins
-  Serial.println("New Output Pins For 1P:");
+    // print Old Output Pins
+    Serial.println("Old Output Pins:");
 
-  for (int i = 0; i < playerOneOutputPinsSize; i++)
-  {
-    Serial.print(playerOneOutputPins[i]);
-    Serial.print(", ");
+    for (int i = 0; i < output_pins_size; i++)
+    {
+      Serial.print(output_pins[i]);
+      Serial.print(", ");
+    }
+    Serial.println("----------------");
+    for (int i = 0; i < doc["output_pins"].size(); i++)
+    {
+      output_pins[i] = doc["output_pins"][i].as<int>();
+    }
+    // print new Output Pins
+    Serial.println("New Output Pins ");
+
+    for (int i = 0; i < output_pins_size; i++)
+    {
+      Serial.print(output_pins[i]);
+      Serial.print(", ");
+    }
+    Serial.println("");
   }
-  Serial.println("");
+  if (doc["credit"]){
+    digitalWrite(service_output_pins[0], LOW);
+    delay(100)
+    digitalWrite(service_output_pins[0], HIGH);
+    Serial.println("Credit Inserted");
+  }
+  if (doc["test"]){
+    digitalWrite(service_output_pins[2], LOW);
+    delay(100)
+    digitalWrite(service_output_pins[2], HIGH);
+    Serial.println("Test Menu Button");
+  }
+  if (doc["service"]){
+    digitalWrite(service_output_pins[1], LOW);
+    delay(100)
+    digitalWrite(service_output_pins[1], HIGH);
+    Serial.println("Service Menu Button");
+
+  }
+
   server.send(200, "text/html", "Pin configuration updated");
 
   Serial.println("UPDATE SUCESSFUL");
@@ -151,7 +184,7 @@ void loop()
   // Read the input pins and write the values to the output pins
   for (int i = 0; i < 6; i++)
   {
-    int inputValue = digitalRead(playerOneInputPins[i]);
-    digitalWrite(playerOneOutputPins[i], inputValue);
+    int input_value = digitalRead(input_pins[i]);
+    digitalWrite(output_pins[i], input_value);
   }
 }
