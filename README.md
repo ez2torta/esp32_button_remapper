@@ -130,3 +130,5 @@ Given that we can't use all the pins from the GPIO, we must consider using All t
 [ESP32 Pinout Picture](https://cdn.shopify.com/s/files/1/0609/6011/2892/files/doc-esp32-pinout-reference-wroom-devkit.png?width=692)
 
 [Input Output Pins reference](https://www.upesy.com/blogs/tutorials/esp32-pinout-reference-gpio-pins-ultimate-guide)
+
+[Arduino IDE Installation](https://randomnerdtutorials.com/installing-the-esp32-board-in-arduino-ide-mac-and-linux-instructions/)

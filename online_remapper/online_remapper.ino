@@ -44,7 +44,7 @@ int service_output_pins[3] = { 26, 13, 14 };
 void setup() {
   // Configure the input pins
   for (int i = 0; i < 6; i++) {
-    pinMode(input_pins[i], INPUT_PULLUP);
+    pinMode(input_pins[i], INPUT);
   }
   delay(10);
   // Configure the output pins
@@ -84,6 +84,7 @@ void setup() {
   Serial.println(WiFi.localIP());
   // Start the server
   server.on("/", handleRoot);
+  server.on("/myip", handleMyIp);
   server.on("/config", handleConfig);
   server.on("/credit", handleCredit);
   server.on("/test", handleTest);
@@ -93,6 +94,9 @@ void setup() {
   Serial.println("Server started");
 }
 
+void handleMyIp() {
+  server.send(200, "text/html", WiFi.localIP().toString());
+}
 // handleCredit
 void handleCredit() {
   // credit button press
@@ -137,9 +141,11 @@ void handleConfig() {
     // print Old Output Pins
     Serial.println("Old Output Pins:");
 
-    for (int i = 0; i < output_pins_size; i++) {
+    for (int i = 0; i < 6; i++) {
       Serial.print(output_pins[i]);
-      Serial.print(", ");
+      if (i < 5) {
+        Serial.print(", ");
+      }
     }
     Serial.println("");
     Serial.println("----------------");
@@ -149,9 +155,11 @@ void handleConfig() {
     // print new Output Pins
     Serial.println("New Output Pins ");
 
-    for (int i = 0; i < output_pins_size; i++) {
+    for (int i = 0; i < 6; i++) {
       Serial.print(output_pins[i]);
-      Serial.print(", ");
+      if (i < 5) {
+        Serial.print(", ");
+      }
     }
     server.send(200, "text/html", "Pin configuration updated");
     Serial.println("");
@@ -173,6 +181,7 @@ void handleRoot() {
     server.send(500, "text/html", "Internal Server Error :(");
     return;
   }
+  server.send(200, "text/html", "ESP32 Working!");
 }
 
 void handleNotFound() {
@@ -197,13 +206,6 @@ void loop() {
 
   // Read the input pins and write the values to the output pins
   for (int i = 0; i < 6; i++) {
-    int button_state = digitalRead(input_pins[i]);
-    if (button_state == HIGH){
-      digitalWrite(output_pins[i], HIGH);
-    }
-    else{
-      digitalWrite(output_pins[i], LOW);
-    }
+    digitalWrite(output_pins[i], digitalRead(input_pins[i]));
   }
-  delay(1);
 }
