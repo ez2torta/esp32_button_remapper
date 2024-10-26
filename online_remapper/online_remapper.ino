@@ -1,4 +1,3 @@
-#include <ESPmDNS.h>
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WebServer.h>
@@ -71,13 +70,6 @@ void setup() {
   while (WiFi.status() != WL_CONNECTED) {
     delay(1000);
     Serial.println("Connecting to WiFi...");
-  }
-
-  // Initialize mDNS
-  if (!MDNS.begin("tortimatch1p")) {
-    Serial.println("Error setting up mDNS!");
-  } else {
-    Serial.println("mDNS responder started");
   }
   Serial.println("Connected to WiFi");
   Serial.println("IP Address:");
